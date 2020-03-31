@@ -7,6 +7,6 @@
     </head>
     <body>
         <h3>Welcome to Pizza Application</h3>
-        <a href="#">Order Pizza</a>
+        <a href="order">Order Pizza</a>
     </body>
 </html>
