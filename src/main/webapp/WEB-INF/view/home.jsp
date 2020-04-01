@@ -8,5 +8,6 @@
     <body>
         <h3>Welcome to Pizza Application</h3>
         <a href="order">Order Pizza</a>
+        ${sizes}
     </body>
 </html>

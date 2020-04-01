@@ -4,6 +4,7 @@
     Author     : user
 --%>
 
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,11 +14,9 @@
     </head>
     <body>
         <h1>Choose your Pizza</h1>
-        <form action="order/submitOrder" method="POST">
+        <form:form action="order/submitOrder" method="POST" modelAttribute="order">
             <p><strong>Choose bread size:</strong></p>
-            <input type="radio" name="size" value="Large">Large<br/>
-            <input type="radio" name="size" value="Medium">Medium<br/>
-            <input type="radio" name="size" value="Small">Small<br/>
+            <form:radiobuttons path="pizza.size" items="${sizes}" itemLabel="sname" />
 
             <p><strong>Choose ingredients:</strong></p>
             <input type="checkbox" name="ingredients" value="Potatoes">Potatoes<br/>
@@ -37,6 +36,6 @@
             Age:<input type="number" name="age"/><br/>
             <br/>
             <input type="submit" value="Submit"/>
-        </form>
+        </form:form>
     </body>
 </html>
