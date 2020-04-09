@@ -9,21 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BreadSizeDaoImpl implements BreadSizeDao{
+public class BreadSizeDaoImpl extends SuperDao implements BreadSizeDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
-    
-    private Session getSession(){
-        Session s = sessionFactory.getCurrentSession();
-        return s;
-    }
-    
     @Override
     public List<BreadSize> findAll() {
-        Query q = getSession().createNamedQuery("BreadSize.findAll");
+        Query q = getSession().createNamedQuery("BreadSize.findAll", BreadSize.class);
         List<BreadSize> list = q.getResultList();
         return list;
     }
-    
+
+    @Override
+    public BreadSize findById(int id) {
+        Query q = getSession().createNamedQuery("BreadSize.findById", BreadSize.class);
+        q.setParameter("id", id);
+        BreadSize b = (BreadSize)q.getResultList().get(0);
+        return b;
+    }
+
 }

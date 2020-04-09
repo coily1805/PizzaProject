@@ -8,22 +8,20 @@
     </head>
     <body>
         <h1>You ordered a nice pizza</h1>
-        <strong>Size:</strong> ${size}
+        <strong>Size:</strong> ${order.pizza.size.sname}
         <br/>
         <br/>
         <strong>Ingredients:</strong>
         <ul>
-            <c:forEach items="${ingredients}" var="i">
-                <li>${i}</li>
-            </c:forEach>
+            <c:forEach items="${order.pizza.ingredients}" var="ingr">
+                <li>${ingr.iname}</li>
+                </c:forEach>
         </ul>
-        <strong>Payment Method:</strong>${payment}
+        <strong>Payment Method:</strong> ${order.payment.pname}
         <br/>
-        <strong>Your name:</strong>${name}
+        <strong>Your name:</strong>${order.customer.cname}
         <br/>
-        <strong>Your age:</strong>${age}
-        <br/>
-        <br/>
-        <strong>Thank you</strong>
+        <strong>Your age:</strong> ${order.customer.cage}
+        <h3>Thank you for your order</h3>
     </body>
 </html>

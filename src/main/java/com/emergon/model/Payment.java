@@ -7,9 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p")
+    , @NamedQuery(name = "Payment.findById", query = "SELECT p FROM Payment p WHERE p.id = :id")
+    , @NamedQuery(name = "Payment.findByPname", query = "SELECT p FROM Payment p WHERE p.pname = :pname")})
+
 public class Payment implements Serializable {
     
     @Id

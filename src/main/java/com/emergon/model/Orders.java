@@ -39,7 +39,7 @@ public class Orders implements Serializable {
     @Column(name = "id")
     private Integer id;
     @JoinColumn(name = "pizza_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Pizza pizza;
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @ManyToOne(cascade = CascadeType.ALL)

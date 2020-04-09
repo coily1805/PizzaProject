@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface IngredientDao {
 
-    public List<Ingredient> findAll();
-    
+    List<Ingredient> findAll();
+
+    public Ingredient findById(int id);
 }

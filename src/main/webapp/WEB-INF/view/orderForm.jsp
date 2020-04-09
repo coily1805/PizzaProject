@@ -11,31 +11,44 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order Pizza</title>
+        <style>
+            .error{
+                color:  red;
+            }
+        </style>
     </head>
     <body>
         <h1>Choose your Pizza</h1>
-        <form:form action="order/submitOrder" method="POST" modelAttribute="order">
+        <form:form action="order/process" method="POST" modelAttribute="order">
             <p><strong>Choose bread size:</strong></p>
-            <form:radiobuttons path="pizza.size" items="${sizes}" itemLabel="sname" />
-
+            <form:radiobuttons path="pizza.size" items="${sizes}" itemLabel="sname" itemValue="id" />
+            <form:errors path="pizza.size" cssClass="error"/>
+            <hr>
             <p><strong>Choose ingredients:</strong></p>
-            <input type="checkbox" name="ingredients" value="Potatoes">Potatoes<br/>
-            <input type="checkbox" name="ingredients" value="Tomatoes">Tomatoes<br/>
-            <input type="checkbox" name="ingredients" value="Sausage">Sausage<br/>
 
+            <form:checkboxes path="pizza.ingredients" items="${ingredients}" itemLabel="iname" itemValue="id"/>
+            <form:errors path="pizza.ingredients" cssClass="error"/>
+            <%--
+            <c:forEach items="${ingredients}" var="ingredient">
+                <input type="checkbox" name="ingredients" value="${ingredient}">${ingredient.iname}<br/>
+            </c:forEach>
+            --%>
+            <hr>
             <p><strong>Choose payment method:</strong></p>
-            <select name="payment">
-                <option value="Credit Card">Credit Card</option>
-                <option value="Cash">Cash</option>
-                <option value="Bitcoin">Bitcoin</option>
-                <option value="Paypal">Paypal</option>
-            </select>
-            
+
+            <form:select path="payment" items="${payments}" itemLabel="pname" itemValue="id"/>
+            <form:errors path="payment" cssClass="error"/>
+            <br/>
             <p><strong>Your details:</strong></p>
-            Name: <input type="text" name="name"/><br/>
-            Age:<input type="number" name="age"/><br/>
+            Name: <form:input path="customer.cname"/>
+            <form:errors path="customer.cname" cssClass="error"/>
+            <br/>
+            Age:<form:input path="customer.cage"/>
+            <form:errors path="customer.cage" cssClass="error"/>
+            <br/>
             <br/>
             <input type="submit" value="Submit"/>
+
         </form:form>
     </body>
 </html>

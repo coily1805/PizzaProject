@@ -3,59 +3,67 @@ package com.emergon.controller;
 import com.emergon.model.BreadSize;
 import com.emergon.model.Ingredient;
 import com.emergon.model.Orders;
+import com.emergon.model.Payment;
 import com.emergon.service.BreadSizeService;
 import com.emergon.service.IngredientService;
+import com.emergon.service.OrderService;
+import com.emergon.service.PaymentService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
 
     @Autowired
+    private IngredientService ingredientService;
+    @Autowired
     private BreadSizeService breadSizeService;
     @Autowired
-    private IngredientService ingredientService;
-    
-    @GetMapping
-    public String orderForm(Model m) {
+    private PaymentService paymentService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @GetMapping()
+    public String showOrderForm(Model m) {
         Orders order = new Orders();
         m.addAttribute("order", order);
         return "orderForm";
     }
-    
-    @ModelAttribute("sizes")
-    public List<BreadSize> getSizes(){
-        return breadSizeService.findAll();
+
+    @PostMapping("/process")
+    public String processOrder(
+            @ModelAttribute("order") @Valid Orders order, BindingResult result
+    ) {
+
+        if (result.hasErrors()) {
+            return "orderForm";
+        }
+        boolean isSaved = orderService.save(order);
+        return "showOrder";
     }
-    
+
+    @ModelAttribute("payments")//ModelAttribute is called before requestMethod and is automatically filled in the Model Object
+    public List<Payment> getPayments() {
+        return paymentService.findAll();
+    }
+
     @ModelAttribute("ingredients")
-    public List<Ingredient> getIngredients(){
+    public List<Ingredient> getIngredients() {
         return ingredientService.findAll();
     }
-    
-    
 
-    @PostMapping("/submitOrder")
-    public String showOrder(
-            @RequestParam("size") String size,
-            @RequestParam("ingredients") List<String> ingredients,
-            @RequestParam("payment") String payment,
-            @RequestParam("name") String name,
-            @RequestParam("age") int age,
-            Model model) {
-        model.addAttribute("size", size);
-        model.addAttribute("ingredients", ingredients);
-        model.addAttribute("payment", payment);
-        model.addAttribute("name", name);
-        model.addAttribute("age", age);
-        return "showOrder";
+    @ModelAttribute("sizes")
+    public List<BreadSize> getBreadSizes() {
+        return breadSizeService.findAll();
     }
 }

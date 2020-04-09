@@ -18,5 +18,10 @@ public class BreadSizeServiceImpl implements BreadSizeService{
     public List<BreadSize> findAll() {
         return dao.findAll();
     }
+
+    @Override
+    public BreadSize findById(int id) {
+        return dao.findById(id);
+    }
     
 }

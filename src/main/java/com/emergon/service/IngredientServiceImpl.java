@@ -12,11 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class IngredientServiceImpl implements IngredientService{
 
     @Autowired
-    IngredientDao dao;
+    private IngredientDao dao;
     
     @Override
     public List<Ingredient> findAll() {
         return dao.findAll();
+    }
+
+    @Override
+    public Ingredient findById(int id) {
+        return dao.findById(id);
     }
     
 }
